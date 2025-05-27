@@ -12,4 +12,16 @@ public class LoginTest {
     public void case01(){
         loginPage.verifyPage();
     }
+
+
+    @Test
+    @Description("Verificando pagina")
+    public void case02(){
+        loginPage.verifyPage();
+    }
 }
+
+
+
+
+
