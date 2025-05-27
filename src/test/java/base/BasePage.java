@@ -30,8 +30,12 @@ public abstract class BasePage {
         return new WebDriverProvider().get();
     }
 
+    protected WebDriverWait getWait(){
+        return new WebDriverWait(getDriver(),Duration.ofSeconds(timeOut));
+    }
+
     protected void waitPage(By locator, String pageName){
-        final var wait = new WebDriverWait(getDriver(),Duration.ofSeconds(timeOut));
+        final var wait = getWait();
 
         Logs.info("Esperando a que cargue la pagina ",pageName);
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -52,6 +56,16 @@ public abstract class BasePage {
 
     protected String getText(By locator){
         return getDriver().findElement(locator).getText();
+    }
+
+    protected Boolean isDisplayed(By locator){
+        try {
+            final var wait = getWait();
+            final var element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return element.isDisplayed();
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public abstract void waitPageLoad();
